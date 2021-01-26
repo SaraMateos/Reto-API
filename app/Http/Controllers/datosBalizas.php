@@ -8,6 +8,8 @@ class datosBalizas extends Controller {
     
     public function coger() {
 
+        $fecha = date("Y/m/d");
+
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_URL, "https://euskalmet.beta.euskadi.eus/vamet/stations/stationList/stationList.json");
@@ -18,10 +20,24 @@ class datosBalizas extends Controller {
         curl_close($curl);
 
         $balizas = json_decode($response, true);
-            foreach($balizas as $marker) {
+            foreach($balizas as $baliza) {
 
-                if ($ba)
-                var_dump($marker["id"]);
+                if ($baliza["stationType"]=="METEOROLOGICAL") {
+                    $nomBaliza = $baliza["id"];
+
+                    $curl2 = curl_init();
+
+                curl_setopt($curl2, CURLOPT_URL, "https://euskalmet.beta.euskadi.eus/vamet/stations/readings/".$nomBaliza."/".$fecha."readingsData.json");
+                curl_setopt($curl2, CURLOPT_RETURNTRANSFER,true);
+                curl_setopt($curl2, CURLOPT_SSL_VERIFYPEER, false);
+
+                $response = utf8_encode(curl_exec($curl2));
+                curl_close($curl2);
+
+                $datosBalizas = json_decode($response, true);
+                echo var_dump($datosBalizas);
+
+                }
             }
     }
 }
