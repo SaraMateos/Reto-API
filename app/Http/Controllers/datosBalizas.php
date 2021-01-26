@@ -15,12 +15,13 @@ class datosBalizas extends Controller {
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
         $response = utf8_encode(curl_exec($curl));
-        $err = curl_error($curl);
         curl_close($curl);
 
         $balizas = json_decode($response, true);
             foreach($balizas as $marker) {
-                var_dump($marker["name"]);
+
+                if ($ba)
+                var_dump($marker["id"]);
             }
     }
 }
