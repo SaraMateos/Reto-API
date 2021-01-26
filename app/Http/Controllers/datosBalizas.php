@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class datosBalizas extends Controller {
     
-    public function coger() {
+    public function cogerDatos() {
 
         $aino = date("Y");
         $mes = date("m");
@@ -21,7 +21,7 @@ class datosBalizas extends Controller {
         $response = utf8_encode(curl_exec($curl));
         if (curl_errno($curl)) { 
             print curl_error($curl); 
-         } 
+        } 
         curl_close($curl);
 
         $balizas = json_decode($response, true);

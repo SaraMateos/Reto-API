@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/datos', [datosBalizas::class, "coger"]);
+Route::get('/datos', [datosBalizas::class, "cogerDatos"]);
