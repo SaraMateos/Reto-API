@@ -25,26 +25,30 @@ class datosBalizas extends Controller {
         curl_close($curl);
 
         $balizas = json_decode($response, true);
-            foreach($balizas as $baliza) {
 
-                if ($baliza["stationType"]=="METEOROLOGICAL") {
-                    $nomBaliza = $baliza["id"];
+        foreach($balizas as $baliza) {
 
-                    $curl2 = curl_init();
+            if ($baliza["stationType"]=="METEOROLOGICAL") {
+                
+                $nomBaliza = $baliza["id"];
 
-                    curl_setopt($curl2, CURLOPT_URL, "https://euskalmet.beta.euskadi.eus/vamet/stations/readings/" . $nomBaliza . "/" . $aino . "/" . $mes . "/" . $dia . "/readingsData.json");
-                    curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($curl2, CURLOPT_SSL_VERIFYPEER, false);
+                $curl2 = curl_init();
 
-                    $response = utf8_encode(curl_exec($curl2));
-                    if (curl_errno($curl2)) { 
-                        print curl_error($curl2); 
-                     } 
-                    curl_close($curl2);
+                curl_setopt($curl2, CURLOPT_URL, "https://euskalmet.beta.euskadi.eus/vamet/stations/readings/" . $nomBaliza . "/" . $aino . "/" . $mes . "/" . $dia . "/readingsData.json");
+                curl_setopt($curl2, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl2, CURLOPT_SSL_VERIFYPEER, false);
 
-                    $datosBalizas = json_decode($response, true);
-                    var_dump($datosBalizas);
-                }
+                $response = utf8_encode(curl_exec($curl2));
+
+                if (curl_errno($curl2)) { 
+                    print curl_error($curl2); 
+                } 
+
+                curl_close($curl2);
+
+                $datosBalizas = json_decode($response, true);
+                var_dump($datosBalizas);
             }
+        }
     }
 }
