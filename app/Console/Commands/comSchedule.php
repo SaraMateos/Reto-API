@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class comSchedule extends Command
-{
+class comSchedule extends Command {
+    
     /**
      * The name and signature of the console command.
      *
