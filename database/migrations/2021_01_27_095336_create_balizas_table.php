@@ -16,6 +16,8 @@ class CreateBalizasTable extends Migration
         Schema::create('balizas', function (Blueprint $table) {
             $table->id();
             $table->string("nombre")->unique();
+            $table->string("municipio");
+            $table->string("provincia");
             $table->string("latitud");
             $table->string("longitud");
             $table->string("altitud");

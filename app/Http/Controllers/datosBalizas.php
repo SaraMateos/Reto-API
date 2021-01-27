@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Baliza;
 
 class datosBalizas extends Controller {
     
@@ -30,7 +31,7 @@ class datosBalizas extends Controller {
 
             if ($baliza["stationType"]=="METEOROLOGICAL") {
                 
-                return ($datosBalizas = [
+                return $datBalizas = [
                     'id' => $baliza["id"],
                     'nombre' => $baliza["name"],
                     'municipio' => $baliza["municipality"],
@@ -38,13 +39,15 @@ class datosBalizas extends Controller {
                     'altitud' => $baliza["altitude"],
                     'longitud' => $baliza["x"],
                     'latitud' => $baliza["y"],
-                    'tipo' => $baliza["stationType"],
-                ]);
+                    'tipo' => $baliza["stationType"]
+                ];
 
-                //Baliza::create($datosBalizas);
+                //return Baliza::all();
 
-                $datosBalizas = json_decode($response, true);
-                var_dump($datosBalizas);
+                Baliza::create($datBalizas);
+
+                $datBalizas = json_decode($response, true);
+                var_dump($datBalizas);
 
             }
 
