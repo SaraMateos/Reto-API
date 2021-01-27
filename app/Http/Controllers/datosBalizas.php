@@ -30,6 +30,26 @@ class datosBalizas extends Controller {
 
             if ($baliza["stationType"]=="METEOROLOGICAL") {
                 
+                return ($datosBalizas = [
+                    'id' => $baliza["id"],
+                    'nombre' => $baliza["name"],
+                    'municipio' => $baliza["municipality"],
+                    'provincia' => $baliza["province"],
+                    'altitud' => $baliza["altitude"],
+                    'longitud' => $baliza["x"],
+                    'latitud' => $baliza["y"],
+                    'tipo' => $baliza["stationType"],
+                ]);
+
+                //Baliza::create($datosBalizas);
+
+                $datosBalizas = json_decode($response, true);
+                var_dump($datosBalizas);
+
+            }
+
+            /*if ($baliza["stationType"]=="METEOROLOGICAL") {
+                
                 $nomBaliza = $baliza["id"];
 
                 $curl2 = curl_init();
@@ -48,7 +68,7 @@ class datosBalizas extends Controller {
 
                 $datosBalizas = json_decode($response, true);
                 var_dump($datosBalizas);
-            }
+            }*/
         }
     }
 }
