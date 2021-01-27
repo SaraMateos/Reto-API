@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-// user controller routes
+//user controller routes
 Route::post("register", [UserController::class, "register"]);
 Route::post("login", [UserController::class, "login"]);
 Route::post('logout', [UserController::class, "logout"]);
