@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Models\Baliza;
+use App\Http\Controllers\UserController;
 
 
 //Pagina de inicio
@@ -18,13 +20,22 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('logout', [UserController::class, "logout"]);
 });
 
+//Muestra en JSON las balizas
+Route::get('baliza', function() {
+    return Baliza::all();
+});
 
+Route::get('baliza/{id}', function($id) {
+    return Baliza::find($id);
+});
+
+//Guardar datos
+Route::post('/balizas', [BalizasController::class, "cogerBalizas"]);
+Route::post('/datosbalizas', [BalizasController::class, "cogerDatos"]);
 
 
 
 //sanctum auth middleware routes
 Route::middleware('auth:api')->group(function() {
-
     Route::get("user", [UserController::class, "user"]);
-
 });

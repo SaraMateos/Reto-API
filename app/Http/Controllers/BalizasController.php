@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Baliza;
 
 class datosBalizas extends Controller {
+
+
+
+
+
+
+
+    
     
     public function cogerBalizas() {
 

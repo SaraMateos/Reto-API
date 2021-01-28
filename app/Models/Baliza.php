@@ -15,10 +15,6 @@ class Baliza extends Model {
      * @var array
      */
     protected $fillable = [
-        'id',
-        'nombre',
-        'latitud',
-        'longitud',
-        'altitud'
+        'id', 'nombre', 'latitud', 'longitud', 'altitud'
     ];
 }
