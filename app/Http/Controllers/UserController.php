@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+
 
 class UserController extends Controller {
 
-    //Registro de usuario
+    //registro de usuario
     public function register(Request $request) {
+
         $validator = Validator::make($request->all(), [
             "name" => "required",
             "email" => "required|email",
@@ -19,71 +20,64 @@ class UserController extends Controller {
         ]);
 
         if ($validator->fails()) {
-            return response()->json(["status" => "failed", "validation_errors" => $validator->errors()]);
+            return response()->json([
+                "status_code" => 400, 
+                'message' => 'Bad request'
+            ]);
         }
 
-        $inputs = $request->all();
-        $inputs["password"] = Hash::make($request->password);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
 
-        $user = User::create($inputs);
-
-        if (!is_null($user)) {
-            return response()->json(["status" => "success", "message" => "Perfecto! Registro completado", "data" => $user]);
-        }
-        else {
-            return response()->json(["status" => "failed", "message" => "Fallo a la hora de registrarse!"]);
-        }
+        return response()->json([
+            'status'=> 200, 
+            'message'=> 'Usuario creado correctamente'
+        ]);
     }
 
-    //Iniciar sesion
+    //Inicio de sesion
     public function login(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            "email" =>  "required|email",
-            "password" =>  "required",
+            "email" => "required|email",
+            "password" => "required"
         ]);
 
-        if($validator->fails()) {
-            return response()->json(["validation_errors" => $validator->errors()]);
+        if ($validator->fails()) {
+            return response()->json([
+                "status_code" => 400, 
+                'message' => 'Bad request']);
+        }
+
+        $credentials = request(['email', 'password']);
+
+        if(!Auth::attempt($credentials)) {
+            return reponse()->json([
+                'status_code' => 500, 
+                'message' => 'No autorizado'
+            ]);
         }
 
         $user = User::where("email", $request->email)->first();
 
-        if (is_null($user)) {
-            return response()->json(["status" => "failed", "message" => "Whoops! Email no encontrado."]);
-        }
+        $tokenResult = $user->createToken('authToken')->plainTextToken;
 
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $user = Auth::user();
-            $token = $user->createToken('token')->plainTextToken;
-
-            return response()->json(["status" => "success", "login" => true, "token" => $token, "data" => $user]);
-        } else {
-            return response()->json(["status" => "failed", "success" => false, "message" => "Whoops! Contraseña incorrecta."]);
-        }
-    }
-    
-    //Detalles del usuario
-    public function user() {
-        $user = Auth::user();
-
-        if (!is_null($user)) { 
-            return response()->json(["status" => "success", "data" => $user]);
-        } else {
-            return response()->json(["status" => "failed", "message" => "Whoops! No se encuentra al usuario."]);
-        }        
+        return response()->json([
+            'status_code' => 200, 
+            'token' => $tokenResult
+        ]);
     }
 
-    //Cerrar sesion de usuario
+    //Cierre de sesión
     public function logout(Request $request) {
 
-        $user = Auth::guard('api')->user();
-
-        if ($user) {
-            $user->remember_token = null;
-            $user->save();
-        }
-
-        return response()->json(['data' => 'Sesion del usuario cerrada.'], 200);
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'status_code' => 200, 
+            'message' => 'Token deleted successfully!'
+        ]);
     }
 }
