@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Models\Baliza;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BalizasController;
 
 
 //Pagina de inicio

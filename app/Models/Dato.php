@@ -20,6 +20,7 @@ class Dato extends Model {
         'humedad',
         'viento',
         'viento Max',
+        'viento Dir',
         'precipitacion',
     ];
 }

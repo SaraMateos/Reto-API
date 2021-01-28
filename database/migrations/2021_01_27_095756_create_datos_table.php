@@ -20,6 +20,7 @@ class CreateDatosTable extends Migration
             $table->float("humedad");
             $table->float("viento");
             $table->float("viento Max");
+            $table->float("viento Dir");
             $table->float("precipitacion");
             $table->timestamps();
         });
