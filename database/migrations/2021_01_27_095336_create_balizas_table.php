@@ -14,7 +14,7 @@ class CreateBalizasTable extends Migration
     public function up()
     {
         Schema::create('balizas', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->unique();
             $table->string("nombre")->unique();
             $table->string("latitud");
             $table->string("longitud");
