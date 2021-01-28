@@ -16,8 +16,6 @@ class Baliza extends Model {
      */
     protected $fillable = [
         'nombre',
-        'municipio',
-        'provincia',
         'latitud',
         'longitud',
         'altitud'
