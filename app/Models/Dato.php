@@ -16,11 +16,5 @@ class Dato extends Model {
      */
     protected $fillable = [
         'nombre',
-        'temperatura',
-        'humedad',
-        'viento',
-        'viento Max',
-        'viento Dir',
-        'precipitacion',
     ];
 }

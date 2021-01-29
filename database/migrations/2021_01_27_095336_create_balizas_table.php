@@ -19,6 +19,12 @@ class CreateBalizasTable extends Migration
             $table->string("latitud");
             $table->string("longitud");
             $table->string("altitud");
+            $table->float("temperatura")->nullable();
+            $table->float("humedad")->nullable();
+            $table->float("viento")->nullable();
+            $table->float("viento Max")->nullable();
+            $table->float("viento Dir")->nullable();
+            $table->float("precipitacion")->nullable();
             $table->timestamps();
         });
     }

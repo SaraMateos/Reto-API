@@ -16,12 +16,7 @@ class CreateDatosTable extends Migration
         Schema::create('datos', function (Blueprint $table) {
             $table->id();
             $table->string("nombre")->unique();
-            $table->float("temperatura");
-            $table->float("humedad");
-            $table->float("viento");
-            $table->float("viento Max");
-            $table->float("viento Dir");
-            $table->float("precipitacion");
+            
             $table->timestamps();
         });
     }

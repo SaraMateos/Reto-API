@@ -21,12 +21,15 @@ class BalizasController extends Controller {
                 $datBalizas = [
                     'id' => $baliza["id"],
                     'nombre' => $baliza["name"],
-                    'municipio' => $baliza["municipality"],
-                    'provincia' => $baliza["province"],
                     'altitud' => $baliza["altitude"],
                     'longitud' => $baliza["x"],
                     'latitud' => $baliza["y"],
-                    'tipo' => $baliza["stationType"]
+                    'temperatura' => rand(-5, 25),
+                    'humedad' => rand(0, 100),
+                    'viento' => rand(0, 100),
+                    'viento Max' => rand(0, 100),
+                    'viento Dir' => rand(0, 100),
+                    'precipitacion' => rand(0, 100),
                 ];
 
                 Baliza::create($datBalizas);
@@ -64,9 +67,6 @@ class BalizasController extends Controller {
                 ];
 
                 Dato::create($datBalizas);
-
-                // $datBalizas = json_decode($baliza, true);
-                // var_dump($datBalizas);
 
             }
 
