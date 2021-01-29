@@ -18,6 +18,12 @@ class BalizasController extends Controller {
 
             if ($baliza["stationType"]=="METEOROLOGICAL") {
                 
+                /*nbaliza = new Baliza;
+                nbaliza = id.........
+                
+                */
+
+
                 $datBalizas = [
                     'id' => $baliza["id"],
                     'nombre' => $baliza["name"],
