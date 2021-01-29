@@ -31,8 +31,8 @@ Route::get('baliza/{id}', function($id) {
 });
 
 //Guardar datos
-Route::post('/balizas', [BalizasController::class, "cogerBalizas"]);
-Route::post('/datosbalizas', [BalizasController::class, "cogerDatos"]);
+// Route::post('/balizas', [BalizasController::class, "cogerBalizas"]);
+// Route::post('/datosbalizas', [BalizasController::class, "cogerDatos"]);
 
 
 

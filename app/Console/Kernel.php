@@ -13,7 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
     ];
 
     /**
@@ -25,9 +24,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule) {
 
         //$schedule->command('check:comSchedule')->everyMinute();
-        $schedule->call(function () {
-            DB::table('datos')->update();
-        })->daily();
+        //$schedule->commands('actualizaDatos')->everyMinute();
     }
 
     /**

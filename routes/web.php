@@ -19,4 +19,4 @@ Route::get('/', function () {
 });
 
 Route::get('/balizas', [BalizasController::class, "cogerBalizas"]);
-Route::get('/datosBalizas', [BalizasController::class, "cogerDatos"]);
+Route::get('/datosBalizas', [BalizasController::class, "actualizarDatos"]);

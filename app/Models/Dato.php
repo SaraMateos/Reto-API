@@ -15,6 +15,6 @@ class Dato extends Model {
      * @var array
      */
     protected $fillable = [
-        'nombre',
+        'nombre', 'temperatura', 'humedad', 'viento', 'viento Max', 'viento Dir', 'precipitacion'
     ];
 }
