@@ -24,11 +24,11 @@ class BalizasController extends Controller {
                     'altitud' => $baliza["altitude"],
                     'longitud' => $baliza["x"],
                     'latitud' => $baliza["y"],
-                    'temperatura' => rand(-5, 25),
+                    'temperatura' => rand(-3, 25),
                     'humedad' => rand(0, 100),
                     'viento' => rand(0, 100),
                     'viento Max' => rand(0, 100),
-                    'viento Dir' => rand(0, 100),
+                    'viento Dir' => rand(0, 360),
                     'precipitacion' => rand(0, 100),
                 ];
 
