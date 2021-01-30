@@ -23,8 +23,40 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule) {
 
-        //$schedule->command('check:comSchedule')->everyMinute();
-        //$schedule->commands('actualizaDatos')->everyMinute();
+        $schedule->call(function() {
+
+            Baliza::truncate();
+            $url = 'https://euskalmet.beta.euskadi.eus/vamet/stations/stationList/stationList.json';
+            $data = utf8_encode(file_get_contents($url)); 
+            $balizas = json_decode($data, true, 512, JSON_INVALID_UTF8_IGNORE);
+
+            foreach($balizas as $baliza) {
+
+                if ($baliza["stationType"]=="METEOROLOGICAL") {
+                    
+                    $desBaliza = new Baliza();
+                    $desBaliza->id = $baliza["id"];
+                    $desBaliza->nombre = $baliza["name"];
+                    $desBaliza->latitud = $baliza["y"];
+                    $desBaliza->longitud = $baliza["x"];
+                    $desBaliza->altitud = $baliza["altitude"];
+                    $desBaliza->temperatura = rand(-5, 25);
+                    $desBaliza->humedad = rand(0, 100);
+                    $desBaliza->viento = rand(0, 100);
+                    $desBaliza->vientoMax = rand(0, 100);
+                    $desBaliza->vientoDir = rand(0, 360);
+                    $desBaliza->precipitacion = rand(0, 100);
+                    
+                    $desBaliza->save();
+
+                    // $idBaliza=$baliza["id"];             
+                    // $this->datos($idBaliza); 
+
+                }
+
+            }
+
+        })->everyMinute();
     }
 
     /**
