@@ -14,13 +14,13 @@ class CreateDatosTable extends Migration
     public function up()
     {
         Schema::create('datos', function (Blueprint $table) {
-            $table->id();
-            $table->string("nombre")->unique();
+            $table->string('id')->unique()->nullable();
+            $table->string("nombre")->unique()->nullable();
             $table->float("temperatura")->nullable();
             $table->float("humedad")->nullable();
             $table->float("viento")->nullable();
-            $table->float("viento Max")->nullable();
-            $table->float("viento Dir")->nullable();
+            $table->float("vientoMax")->nullable();
+            $table->float("vientoDir")->nullable();
             $table->float("precipitacion")->nullable();
             $table->timestamps();
         });

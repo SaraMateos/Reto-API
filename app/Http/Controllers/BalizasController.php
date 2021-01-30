@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Baliza;
+use App\Models\Dato;
 
 class BalizasController extends Controller {
 
     //Coge las balizas y las guarda en l abase de datos
     public function balizas() {
 
+        Baliza::truncate();
         $url = 'https://euskalmet.beta.euskadi.eus/vamet/stations/stationList/stationList.json';
         $data = utf8_encode(file_get_contents($url)); 
         $balizas = json_decode($data, true, 512, JSON_INVALID_UTF8_IGNORE);
@@ -18,17 +20,23 @@ class BalizasController extends Controller {
 
             if ($baliza["stationType"]=="METEOROLOGICAL") {
                 
-                $datBaliza = new Baliza();
-                $datBaliza->id = $baliza["id"];
-                $datBaliza->nombre = $baliza["name"];
-                $datBaliza->latitud = $baliza["y"];
-                $datBaliza->longitud = $baliza["x"];
-                $datBaliza->altitud = $baliza["altitude"];
+                $desBaliza = new Baliza();
+                $desBaliza->id = $baliza["id"];
+                $desBaliza->nombre = $baliza["name"];
+                $desBaliza->latitud = $baliza["y"];
+                $desBaliza->longitud = $baliza["x"];
+                $desBaliza->altitud = $baliza["altitude"];
+                $desBaliza->temperatura = rand(-5, 25);
+                $desBaliza->humedad = rand(0, 100);
+                $desBaliza->viento = rand(0, 100);
+                $desBaliza->vientoMax = rand(0, 100);
+                $desBaliza->vientoDir = rand(0, 360);
+                $desBaliza->precipitacion = rand(0, 100);
                 
-                $datBaliza->save();   
+                $desBaliza->save();
 
-                $id=$baliza["id"];             
-                $this->datos($id);
+                // $idBaliza=$baliza["id"];             
+                // $this->datos($idBaliza); 
 
             }
 
@@ -37,28 +45,43 @@ class BalizasController extends Controller {
 
     //Coge los datos meteorologicos de las balizas y las guarda
     public function datos($idBaliza) {
-
-        $aino = date("Y");
-        $mes = date("m");
-        $dia = date("d");
-
-        $url = 'https://euskalmet.beta.euskadi.eus/vamet/stations/readings/'.$idBaliza.'/'.$aino.'/'.$mes.'/'.$dia.'/readingsData.json';
-        $data = utf8_encode(file_get_contents($url)); 
-        $balizas = json_decode($data, true, 512, JSON_INVALID_UTF8_IGNORE);
-
+    
         try {
 
+            $aino = date("Y");
+            $mes = date("m");
+            $dia = date("d");
+
+            $url = 'https://euskalmet.beta.euskadi.eus/vamet/stations/readings/'.$idBaliza.'/'.$aino.'/'.$mes.'/'.$dia.'/readingsData.json';
+            $data = utf8_encode(file_get_contents($url)); 
+            $balizas = json_decode($data, true, 512, JSON_INVALID_UTF8_IGNORE);
+
             //Declarar variable donde se van a guardar los datos
-            $datosBaliza=Baliza::where('id', $idBaliza); 
+            $datBaliza=Baliza::where('id', $idBaliza); 
 
-            foreach($data as $dato) {
-                foreach($dato as $dato2) {
+            foreach($balizas as $dato) {
 
-                }
+                // $datBaliza->id = $dato["station"];
+                // $datBaliza->temperatura = rand(-3, 25);
+                // $datBaliza->humedad = rand(0, 100);
+                // $datBaliza->viento = rand(0, 100);
+                // $datBaliza->vientoMax = rand(0, 360);
+                // $datBaliza->vientoDir = rand(0, 360);
+                // $datBaliza->precipitacion = rand(0, 100);
+                
+                // $datBaliza->id = $dato["station"];
+                // $datBaliza->temperatura = $dato["temperature"];
+                // $datBaliza->humedad = $dato["humidity"];
+                // $datBaliza->viento = $dato["mean_speed"];
+                // $datBaliza->vientoMax = $dato["max_speed"];
+                // $datBaliza->vientoDir = $dato["mean_direction"];
+                // $datBaliza->precipitacion = $dato["precipitation"];
+                
+                // Baliza::create();
+                //$datBaliza->update();
+
             }
             
-            $datoBaliza->update();
-
         } catch (\ErrorException $e) {
             error_log("Error. Pasa al siguiente.");
         }
