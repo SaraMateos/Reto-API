@@ -17,6 +17,3 @@ use App\Http\Controllers\BalizasController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/balizas', [BalizasController::class, "cogerBalizas"]);
-Route::get('/datosBalizas', [BalizasController::class, "actualizarDatos"]);

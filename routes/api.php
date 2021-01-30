@@ -8,31 +8,31 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BalizasController;
 
 
-//Pagina de inicio
-
-
 //Inicio de sesion, registro y cerrar sesion
 Route::post("register", [UserController::class, "register"]);
 Route::post("login", [UserController::class, "login"]);
-
 
 //Solo entras si estas registrado
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('logout', [UserController::class, "logout"]);
 });
 
-//Muestra en JSON las balizas
+
+//Muestra el JSON con las balizas guardadas en la bd
 Route::get('baliza', function() {
     return Baliza::all();
 });
 
+//Muestra el JSON con la baliza indicada
 Route::get('baliza/{id}', function($id) {
     return Baliza::find($id);
 });
 
+
 //Guardar datos
- Route::post('/balizas', [BalizasController::class, "cogerBalizas"]);
- Route::post('/datosbalizas', [BalizasController::class, "cogerDatos"]);
+Route::get('/balizas', [BalizasController::class, "balizas"]);
+Route::get('/datosBalizas', [BalizasController::class, "datos"]);
+
 
 
 

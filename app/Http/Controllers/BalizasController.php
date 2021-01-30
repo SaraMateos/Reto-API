@@ -7,8 +7,8 @@ use App\Models\Baliza;
 
 class BalizasController extends Controller {
 
-    //Coge los datos de las balizas y genera datos aleatorios
-    public function cogerBalizas() {
+    //Coge las balizas y las guarda en l abase de datos
+    public function balizas() {
 
         $url = 'https://euskalmet.beta.euskadi.eus/vamet/stations/stationList/stationList.json';
         $data = utf8_encode(file_get_contents($url)); 
@@ -18,78 +18,50 @@ class BalizasController extends Controller {
 
             if ($baliza["stationType"]=="METEOROLOGICAL") {
                 
-                /*nbaliza = new Baliza;
-                nbaliza = id.........
+                $datBaliza = new Baliza();
+                $datBaliza->id = $baliza["id"];
+                $datBaliza->nombre = $baliza["name"];
+                $datBaliza->latitud = $baliza["y"];
+                $datBaliza->longitud = $baliza["x"];
+                $datBaliza->altitud = $baliza["altitude"];
                 
-                */
+                $datBaliza->save();   
 
-
-                $datBalizas = [
-                    'id' => $baliza["id"],
-                    'nombre' => $baliza["name"],
-                    'altitud' => $baliza["altitude"],
-                    'longitud' => $baliza["x"],
-                    'latitud' => $baliza["y"],
-                    'temperatura' => rand(-3, 25),
-                    'humedad' => rand(0, 100),
-                    'viento' => rand(0, 100),
-                    'viento Max' => rand(0, 100),
-                    'viento Dir' => rand(0, 360),
-                    'precipitacion' => rand(0, 100),
-                ];
-
-                Baliza::create($datBalizas);
+                $id=$baliza["id"];             
+                $this->datos($id);
 
             }
 
         }
     }
 
-    //Coge los datos meteorologicos de la baliza
-    public function actualizarDatos() {
+    //Coge los datos meteorologicos de las balizas y las guarda
+    public function datos($idBaliza) {
 
         $aino = date("Y");
         $mes = date("m");
         $dia = date("d");
 
-        $url = 'https://euskalmet.beta.euskadi.eus/vamet/stations/readings/C071/'.$aino.'/'.$mes.'/'.$dia.'/readingsData.json';
-        $data = file_get_contents($url); 
+        $url = 'https://euskalmet.beta.euskadi.eus/vamet/stations/readings/'.$idBaliza.'/'.$aino.'/'.$mes.'/'.$dia.'/readingsData.json';
+        $data = utf8_encode(file_get_contents($url)); 
         $balizas = json_decode($data, true, 512, JSON_INVALID_UTF8_IGNORE);
 
-        foreach($balizas as $baliza) {
-                
-                $datBalizas = [
-                    'nombre' => $baliza["station"],
-                    'viento' => $baliza["mean_speed"],
-                    'viento Dir' => $baliza["mean_direction"],
-                    'viento Max' => $baliza["max_speed"],
-                    'temperatura' => $baliza["temperature"],
-                    'humedad' => $baliza["humidity"],
-                    'precipitacion' => $baliza["precipitation"],
-                ];
+        try {
 
-                Dato::create($datBalizas);
+            //Declarar variable donde se van a guardar los datos
+            $datosBaliza=Baliza::where('id', $idBaliza); 
 
+            foreach($data as $dato) {
+                foreach($dato as $dato2 ) {
+
+                }
+            }
+            
+            $datoBaliza->update();
+
+        } catch (\ErrorException $e) {
+            error_log("Error. Pasa al siguiente.");
         }
     }
-
-    //Coge los datos de las balizas y genera datos aleatorios
-    /*public function actualizarDatos() {
-
-        foreach($balizas as $baliza) {
-            $datBalizas = [
-                'temperatura' => rand(-3, 25),
-                'humedad' => rand(0, 100),
-                'viento' => rand(0, 100),
-                'viento Max' => rand(0, 100),
-                'viento Dir' => rand(0, 360),
-                'precipitacion' => rand(0, 100),
-            ];
-        }
-
-        $datBalizas->save();
-        Baliza::update($datBalizas);
-
-    }*/
     
 }
