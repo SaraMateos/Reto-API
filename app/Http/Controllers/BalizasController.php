@@ -52,7 +52,7 @@ class BalizasController extends Controller {
             $datosBaliza=Baliza::where('id', $idBaliza); 
 
             foreach($data as $dato) {
-                foreach($dato as $dato2 ) {
+                foreach($dato as $dato2) {
 
                 }
             }
