@@ -24,6 +24,7 @@ Route::get('baliza', function() {
 });
 
 //Muestra el JSON con la baliza indicada
+//Ejemplo baliza/C00A
 Route::get('baliza/{id}', function($id) {
     return Baliza::find($id);
 });

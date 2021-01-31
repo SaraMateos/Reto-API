@@ -3,23 +3,23 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\BalizasController;
+use Illuminate\Support\Facades\Log;
 
-class comSchedule extends Command {
-    
+class actualizarDatos extends Command
+{
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'actualizaDatos';
+    protected $signature = 'sms:actuDatos';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Actualiza los datos de las balizas.';
+    protected $description = 'Actualiza los datos de las balizas';
 
     /**
      * Create a new command instance.
@@ -38,7 +38,6 @@ class comSchedule extends Command {
      */
     public function handle()
     {
-        $statControl = new BalizaController;
-        $statControl->cogerDatos();
+        Log::info('Mi Comando Funciona!');
     }
 }
