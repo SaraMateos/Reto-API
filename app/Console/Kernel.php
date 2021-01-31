@@ -13,7 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        // 'App\Console\Commands\refresDatos',
         'App\Console\Commands\actualizarDatos',
     ];
 
@@ -24,8 +23,6 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule) {
-
-        // $schedule->command('actualizaDatos')->everyMinute();
         $schedule->command('sms:actuDatos')->everyMinute();
     }
 
